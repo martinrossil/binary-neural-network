@@ -1,0 +1,32 @@
+{
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint"],
+  "extends": [
+      "xo",
+      "xo-typescript"
+  ],
+  "ignorePatterns": ["**/*.js"],
+  "rules": {
+      "object-curly-spacing": "off",
+      "@typescript-eslint/object-curly-spacing": "off",
+      "@typescript-eslint/ban-types": "off",
+      "@typescript-eslint/no-confusing-void-expression": "off",
+      "@typescript-eslint/parameter-properties": "off",
+      "@typescript-eslint/naming-convention": "off",              // so we can use first_last
+      "@typescript-eslint/restrict-plus-operands": "off",         // so we can do 'page=' + 1
+      "@typescript-eslint/no-unsafe-argument": "warn",
+      "@typescript-eslint/no-unsafe-assignment": "off",
+      "@typescript-eslint/no-unnecessary-type-assertion": "warn",
+      "capitalized-comments": "off",
+      "@typescript-eslint/consistent-type-imports": "off",        // so we don't have to do import type { SomeType }
+      "@typescript-eslint/consistent-type-definitions": "off",    // we need interfaces that classes implements
+      "@typescript-eslint/member-ordering": "off",                // I want private _ members placed together with get / set
+      "@typescript-eslint/no-unsafe-return": "warn",
+      "dot-notation": "off",
+      "@typescript-eslint/dot-notation": "off",
+      "no-constructor-return": "off",                             // So we can return a Proxy
+      "new-cap": "off",                                           // So we can do: Vector3.Zero()
+      "@typescript-eslint/no-unused-expressions": "off",
+      "@typescript-eslint/class-literal-property-style": "off"    // So we can private readonly x = 0; instead of getters
+  }
+}
