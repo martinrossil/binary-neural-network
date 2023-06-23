@@ -6,7 +6,7 @@ import Sensor from './Sensor';
 import { Point } from './types';
 
 export default class Car implements ICar {
-	private x: number;
+	public x: number;
 	public y: number;
 	private readonly width: number;
 	private readonly height: number;
@@ -14,7 +14,7 @@ export default class Car implements ICar {
 	private readonly acceleration = 0.2;
 	private readonly maxSpeed = 3;
 	private readonly friction = 0.05;
-	private angle = 0;
+	public angle = 0;
 	private readonly controls: IControls;
 	private readonly sensor: ISensor;
 
