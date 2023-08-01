@@ -25,7 +25,8 @@
       "dot-notation": "off",
       "@typescript-eslint/dot-notation": "off",
       "no-constructor-return": "off",                             // So we can return a Proxy
-      "new-cap": "off",                                           // So we can do: Vector3.Zero()
+      "new-cap": "off",   
+      "max-params": "off",                                        // So we can do: Vector3.Zero()
       "@typescript-eslint/no-unused-expressions": "off",
       "@typescript-eslint/class-literal-property-style": "off"    // So we can private readonly x = 0; instead of getters
   }

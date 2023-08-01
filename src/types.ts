@@ -1,3 +1,5 @@
+import ICar from './ICar';
+
 export interface Point {
 	x: number;
 	y: number;
@@ -7,10 +9,14 @@ export interface TouchPoint extends Point {
 	offset: number;
 }
 
-export type Ray = [Point, Point];
+export type Ray = Points;
 
 export type Rays = Ray[];
 
-export type Border = [Point, Point];
+export type Borders = Points[];
 
-export type Borders = [Border, Border];
+export type ControlType = 'DUMMY' | 'KEYS' | 'AI';
+
+export type Points = Point[];
+
+export type Traffic = ICar[];

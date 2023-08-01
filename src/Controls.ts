@@ -1,4 +1,5 @@
 import IControls from './IControls';
+import { ControlType } from './types';
 
 export default class Controls implements IControls {
 	public forward: boolean;
@@ -6,12 +7,16 @@ export default class Controls implements IControls {
 	public right: boolean;
 	public reverse: boolean;
 
-	public constructor() {
+	public constructor(type: ControlType) {
 		this.forward = false;
 		this.left = false;
 		this.right = false;
 		this.reverse = false;
-		this.addKeyboardListeners();
+		if (type === 'KEYS') {
+			this.addKeyboardListeners();
+		} else if (type === 'DUMMY') {
+			this.forward = true;
+		}
 	}
 
 	private addKeyboardListeners() {

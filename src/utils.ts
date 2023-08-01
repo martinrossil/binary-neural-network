@@ -1,4 +1,5 @@
-import { Point } from './types';
+import ILevel from './ILevel';
+import { Point, Points } from './types';
 
 export function lerp(a: number, b: number, t: number) {
 	return a + ((b - a) * t);
@@ -22,4 +23,22 @@ export function getIntersection(a: Point, b: Point, c: Point, d: Point) {
 	}
 
 	return null;
+}
+
+export function polysIntersect(points1: Points, points2: Points) {
+	for (let i = 0; i < points1.length; i++) {
+		for (let j = 0; j < points2.length; j++) {
+			const touch = getIntersection(
+				points1[i],
+				points1[(i + 1) % points1.length],
+				points2[j],
+				points2[(j + 1) % points2.length],
+			);
+			if (touch) {
+				return true;
+			}
+		}
+	}
+
+	return false;
 }

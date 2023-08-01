@@ -7,7 +7,7 @@
         "noImplicitAny": true,                  // any not allowed
         "composite": true,                      // The composite option enforces certain constraints which make it possible for build tools (including TypeScript itself, under --build mode) to quickly determine if a project has been built yet.
         "incremental": true,                    // "composite: true" forces this to be true. Tells TypeScript to save information about the project graph from the last compilation to files stored on disk.
-        "noUncheckedIndexedAccess": true,       // Add undefined to a type when accessed using an index.
+        // "noUncheckedIndexedAccess": true,       // Add undefined to a type when accessed using an index.
         "skipLibCheck": true,                   // Skip type checking all .d.ts files.
         "noEmit": true,                         // Disable emitting file from a compilation.
         "noErrorTruncation": true,

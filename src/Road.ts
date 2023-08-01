@@ -1,5 +1,5 @@
 import IRoad from './IRoad';
-import { Point } from './types';
+import { Points } from './types';
 import { lerp } from './utils';
 
 export default class Road implements IRoad {
@@ -10,7 +10,7 @@ export default class Road implements IRoad {
 	private readonly right: number;
 	private readonly top = -1000000;
 	private readonly bottom = 1000000;
-	public readonly borders: Point[][];
+	public readonly borders: Points[];
 
 	public constructor(x: number, width: number, laneCount = 3) {
 		this.x = x;
@@ -48,7 +48,6 @@ export default class Road implements IRoad {
 				i / this.laneCount,
 			);
 
-			// context.setLineDash([20, 20]);
 			context.beginPath();
 			context.moveTo(x, this.top);
 			context.lineTo(x, this.bottom);
@@ -59,14 +58,10 @@ export default class Road implements IRoad {
 
 		this.borders.forEach(border => {
 			context.beginPath();
-			if (border[0] && border[1]) {
-				context.moveTo(border[0].x, border[0].y);
-				context.lineTo(border[1].x, border[1].y);
-			}
-
+			context.moveTo(border[0].x, border[0].y);
+			context.lineTo(border[1].x, border[1].y);
 			context.stroke();
 		});
-
 		context.restore();
 	}
 }

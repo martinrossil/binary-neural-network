@@ -1,30 +1,30 @@
 import ICar from './ICar';
 import ISensor from './ISensor';
-import { Borders, Point, Ray, Rays, TouchPoint } from './types';
+import { Borders, Point, Ray, Rays, TouchPoint, Traffic } from './types';
 import { getIntersection, lerp } from './utils';
 
 export default class Sensor implements ISensor {
 	private readonly car: ICar;
-	private readonly rayCount;
+	public readonly rayCount;
 	private readonly rayLength;
 	private readonly raySpread;
 	private rays: Rays;
-	private readings: Array<TouchPoint | null>;
+	public readings: Array<TouchPoint | null>;
 
 	public constructor(car: ICar) {
 		this.car = car;
-		this.rayCount = 9;
+		this.rayCount = 16;
 		this.rayLength = 250;
-		this.raySpread = Math.PI * 0.5;
+		this.raySpread = Math.PI * 0.3;
 		this.rays = [];
 		this.readings = [];
 	}
 
-	public update(borders: Borders) {
+	public update(borders: Borders, traffic: Traffic) {
 		this.castRays();
 		this.readings = [];
 		for (const ray of this.rays) {
-			this.readings.push(this.getReading(ray, borders));
+			this.readings.push(this.getReading(ray, borders, traffic));
 		}
 	}
 
@@ -87,13 +87,28 @@ export default class Sensor implements ISensor {
 		}
 	}
 
-	private getReading(ray: Ray, borders: Borders) {
+	private getReading(ray: Ray, borders: Borders, traffic: Traffic) {
 		const touches = [];
 
 		for (const border of borders) {
 			const touch = getIntersection(ray[0], ray[1], border[0], border[1]);
 			if (touch) {
 				touches.push(touch);
+			}
+		}
+
+		for (const car of traffic) {
+			const { polygon } = car;
+			for (let j = 0; j < polygon.length; j++) {
+				const value = getIntersection(
+					ray[0],
+					ray[1],
+					polygon[j],
+					polygon[(j + 1) % polygon.length],
+				);
+				if (value) {
+					touches.push(value);
+				}
 			}
 		}
 

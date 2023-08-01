@@ -4,13 +4,22 @@ import IRoad from './IRoad';
 import Road from './Road';
 
 export default class BinaryNeuralNetwork extends HTMLElement {
+	private readonly road: IRoad;
+
+	private readonly car: ICar;
+
+	private readonly traffic: ICar[];
+
 	public constructor() {
 		super();
 		this.style.display = 'block';
 		this.style.height = '100%';
 		this.appendChild(this.carCanvas);
 		this.road = new Road(this.carCanvas.width / 2, this.carCanvas.width * 0.9);
-		this.car = new Car(this.road.getLaneCenter(1), 100, 30, 50);
+		this.car = new Car(this.road.getLaneCenter(1), 100, 30, 50, 'AI');
+		this.traffic = [
+			new Car(this.road.getLaneCenter(1), -100, 30, 50, 'DUMMY', 2),
+		];
 		this.update();
 	}
 
@@ -20,25 +29,23 @@ export default class BinaryNeuralNetwork extends HTMLElement {
 		this.carContext.fillRect(0, 0, this.carCanvas.width, this.carCanvas.height);
 		this.carContext.restore();
 
-		this.car.update(this.road.borders);
+		for (const car of this.traffic) {
+			car.update(this.road.borders, []);
+		}
+
+		this.car.update(this.road.borders, this.traffic);
 		this.carContext.save();
 		this.carContext.translate(0, -this.car.y + (this.carCanvas.height * 0.7));
 		this.road.draw(this.carContext);
-		this.car.draw(this.carContext);
+
+		for (const car of this.traffic) {
+			car.draw(this.carContext, 'red');
+		}
+
+		this.car.draw(this.carContext, 'blue');
 		this.carContext.restore();
 		requestAnimationFrame(this.update.bind(this));
-		/* this.carContext.save();
-		this.carContext.fillStyle = 'lightgray';
-		this.carContext.fillRect(0, 0, this.carCanvas.width, this.carCanvas.height);
-		this.carContext.restore();
-		this.car.update();
-		this.car.draw(this.carContext);
-		requestAnimationFrame(this.update.bind(this)); */
 	}
-
-	private readonly road: IRoad;
-
-	private readonly car: ICar;
 
 	private _carCanvas!: HTMLCanvasElement;
 
